@@ -1,10 +1,15 @@
 # A Sample Java Web-Application
 :experimental:
 
-image:https://github.com/st-tu-dresden/guestbook/workflows/Build%20Maven%20artifacts/badge.svg["Build Status", link="https://github.com/st-tu-dresden/guestbook/actions?query=workflow%3A%22Build+Maven+artifacts%22"]
-image:https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod["Gitpod ready-to-code", link="https://gitpod.io/#https://github.com/st-tu-dresden/guestbook"]
+image:https://github.com/HOME-programming-pub/guestbook/workflows/Build%20Maven%20artifacts/badge.svg["Build Status", link="https://github.com/HOME-programming-pub/guestbook/actions?query=workflow%3A%22Build+Maven+artifacts%22"]
+image:https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod["Gitpod ready-to-code", link="https://gitpod.io/#https://github.com/HOME-programming-pub/guestbook"]
 
 Purpose of this sample project is to make students familiar with basic technologies they're going to use during the Software Engineering Lab at Technical University of Dresden.
+
+This project is a fork of https://github.com/st-tu-dresden/guestbook. It is used to make students familiar with basic technologies they’re going to use during the Software Engineering Lab at Technical University of Dresden.
+
+At Hochschule Merseburg, this project is used for exactly the same purpose in the Software-Project (Programmierung 3/ Anwendungsprogrammierung).
+
 
 == Quickstart
 
@@ -12,7 +17,7 @@ Purpose of this sample project is to make students familiar with basic technolog
 
 http://gitpod.io/[GitPod] is a cloud IDE that allows you to work with a project right from your browser:
 
-1. Click https://gitpod.io/#https://github.com/st-tu-dresden/guestbook[this link] to open the project in GitPod.
+1. Click https://gitpod.io/#https://github.com/HOME-programming-pub/guestbook[this link] to open the project in GitPod.
 2. Wait for the build to finish (see progress in the console view).
 3. Once the website opens in the embedded preview browser, the project is ready to be worked with.
 
@@ -24,7 +29,7 @@ Also, note that you have to run `mvnw.cmd` instead of `./mvnw` if you run Window
 
 [source, shell]
 ----
-$ git clone https://github.com/st-tu-dresden/guestbook
+$ git clone https://github.com/HOME-programming-pub/guestbook
 $ cd guestbook
 $ ./mvnw clean package
 $ ./mvnw spring-boot:run
