@@ -16,6 +16,8 @@
 package guestbook;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.util.Streamable;
 
@@ -36,4 +38,5 @@ interface GuestbookRepository extends CrudRepository<GuestbookEntry, Long> {
 	 * @return all {@link GuestbookEntry}s matching the query
 	 */
 	Streamable<GuestbookEntry> findByName(String name, Sort sort);
+	
 }

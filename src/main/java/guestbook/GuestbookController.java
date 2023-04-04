@@ -143,7 +143,6 @@ class GuestbookController {
 	String updateEntry(@Valid @ModelAttribute("form") GuestbookForm form, @PathVariable Optional<GuestbookEntry> entry){
 		
 		return entry.map(it -> {
-			
 			it.setName(form.getName());
 			it.setText(form.getText());
 			it.setEmail(form.getEmail());
