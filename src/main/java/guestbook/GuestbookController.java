@@ -133,13 +133,20 @@ class GuestbookController {
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 	
-
-	
 	/*
 	 * Methode für Editieren
 	 * */
+	@GetMapping("/guestbook/edit/{id}")
+	public String showUpdateForm(@PathVariable("id") String id, Model model) {
+	    GuestbookEntry entry = guestbook.findById(Long.parseLong(id))
+	      .orElseThrow(() -> new IllegalArgumentException("Invalid Id:" + id));
+	    
+	    model.addAttribute("entry", entry);
+	    return "update-entry";
+	}
+	
 	@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping(path="/guestbook/{entry}")
+	@PostMapping(path="/guestbook/update/{entry}")
 	String updateEntry(@Valid @ModelAttribute("form") GuestbookForm form, @PathVariable Optional<GuestbookEntry> entry){
 		
 		return entry.map(it -> {
@@ -153,77 +160,4 @@ class GuestbookController {
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
 	}
-
-	// Request methods answering HTMX requests
-
-	/**
-	 * Handles AJAX requests to create a new {@link GuestbookEntry}. Instead of rendering a complete page, this view only
-	 * renders and returns the HTML fragment representing the newly created entry.
-	 * <p>
-	 * Note that we do not react explicitly to a validation error: in such a case, Spring automatically returns an
-	 * appropriate JSON document describing the error.
-	 *
-	 * @param form the form submitted by the user
-	 * @param model the model that's used to render the view
-	 * @return a reference to a Thymeleaf template fragment
-	 * @see #addEntry(String, String)
-	 */
-	
-	
-	@HxRequest
-	@PostMapping(path = "/guestbook")
-	HtmxResponse addEntry(@Valid GuestbookForm form, Model model) {
-
-		model.addAttribute("entry", guestbook.save(form.toNewEntry()));
-		model.addAttribute("index", guestbook.count());
-
-		return new HtmxResponse()
-				.addTemplate("guestbook :: entry")
-				.addTrigger("eventAdded");
-	}
-
-	/**
-	 * Handles AJAX requests to delete {@link GuestbookEntry}s. Otherwise, this method is similar to
-	 * {@link #removeEntry(Optional)}.
-	 *
-	 * @param entry an {@link Optional} with the {@link GuestbookEntry} to delete
-	 * @return a response entity indicating success or failure of the removal
-	 * @throws ResponseStatusException
-	 */
-	@HxRequest
-	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping(path = "/guestbook/{entry}")
-	HtmxResponse removeEntryHtmx(@PathVariable Optional<GuestbookEntry> entry, Model model) {
-
-		return entry.map(it -> {
-
-			guestbook.delete(it);
-
-			model.addAttribute("entries", guestbook.findAll());
-
-			return new HtmxResponse()
-					.addTemplate("guestbook :: entries");
-
-		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-	}
-	
-	/*
-	@HxRequest
-	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping(path = "/guestbook/{entry}")
-	HtmxResponse updateEntryHtmx(@Valid GuestbookForm form, @PathVariable Optional<GuestbookEntry> entry, Model model) {
-		
-		return entry.map(it -> {
-			it.setName(form.getName());
-			it.setText(form.getText());
-			it.setEmail(form.getEmail());
-			guestbook.save(it);
-
-			model.addAttribute("entries", guestbook.findAll());
-
-			return new HtmxResponse()
-					.addTemplate("guestbook :: entries");
-
-		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-	}*/
 }

@@ -23,14 +23,14 @@
 			<div th:each="entry, it : ${entries}" th:with="index = ${it.count}" th:fragment="entries">
 				<div class="card" th:fragment="entry" th:id="entry+${entry.id}">
 					<div class="card-header">
-						<form sec:authorize="hasRole('ADMIN')" th:method="delete" th:action="@{/guestbook/{id}(id=${entry.id})}" th:attr="data-entry-id=${entry.id}">
-							<button th:title="#{guestbook.form.delete}" class="btn btn-sm float-right"
-							        hx:delete="@{/guestbook/{id}(id=${entry.id})}"
-							        hx:target="'#entries'">
+						<form sec:authorize="hasRole('ADMIN')" th:method="delete" th:action="@{/guestbook/{id}(id=${entry.id})}" 
+						      th:attr="data-entry-id=${entry.id}">
+							<button type="submit" th:title="#{guestbook.form.delete}" 
+							class="btn btn-sm float-right">
 								<span class="fas fa-times"></span>
 							</button>
-						</form>					
-							
+						</form>				
+						<a th:href="@{/guestbook/edit/{id}(id=${entry.id})}">Edit</a>	
 						<h4 th:text="${index} + '. ' + ${entry.name} + ' : ' + ${entry.email}" class="card-title">1. Posting</h4>
 					</div>
 					<div class="card-body">
@@ -39,33 +39,12 @@
 					<div class="card-footer">
 						<footer class="date" th:text="${#temporals.format(entry.date, 'dd. MMMM yyyy - HH:mm')}">Datum</footer>					
 					</div>	
-							
-							
-<!--Feld für Editieren-->				
-					<form  hx-target="body" method="post" th:object="${form}" role="form" class="gb-form" id="form2" sec:authorize="hasRole('ADMIN')" hx:post="@{/guestbook/{id}(id=${entry.id})}" th:action="@{/guestbook/{id}(id=${entry.id})}" th:attr="data-entry-id=${entry.id}">
-						<div class="form-group">
-							<label th:text="#{guestbook.form.name}">Name</label><br /> 
-							<input class="form-control" type="text" th:field="*{name}" th:errorclass="is-invalid" required="required" />
-							<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:text="#{guestbook.form.name.required}">Please provide a name.</div> 
-						</div>
-						<div class="form-group">
-							<label th:text="#{guestbook.form.email}">Email</label><br /> 
-							<input class="form-control" type="text" th:field="*{email}" th:errorclass="is-invalid" required="required" />
-							<div th:if="${#fields.hasErrors('email')}" class="invalid-feedback" th:text="#{guestbook.form.email.required}">Please provide an email address.</div> 
-						</div>
-						<div class="form-group">
-							<label th:text="#{guestbook.form.text}">Text</label><br /> 
-							<textarea th:field="*{text}" th:errorclass="is-invalid" class="form-control" required="required"></textarea>
-							<div th:if="${#fields.hasErrors('text')}" class="invalid-feedback" th:text="#{guestbook.form.text.required}">Please provide a text.</div>
-						</div>
-						<input style="float:right" type="submit" class="btn btn-secondary" value="Ändern" />
-					</form>	
-<!---->			
 				</div>
 			</div>
 		</div>
 
-		<form method="post" role="form" class="gb-form" id="form" hx:post="@{/guestbook}" hx-target="#entries" hx-swap="beforeend" _="on entryAdded me.reset()" th:action="@{/guestbook}" th:object="${form}">
+		<form method="post" role="form" class="gb-form" id="form"  
+		th:action="@{/guestbook}" th:object="${form}">
 			<div class="form-group">
 				<label for="name" th:text="#{guestbook.form.name}">Name</label><br /> 
 				<input class="form-control" type="text" th:field="*{name}" th:errorclass="is-invalid" required="required" />
